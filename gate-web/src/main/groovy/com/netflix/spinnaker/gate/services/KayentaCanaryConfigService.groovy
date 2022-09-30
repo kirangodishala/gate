@@ -39,6 +39,8 @@ class KayentaCanaryConfigService implements CanaryConfigService {
     try {
       return kayentaService.getCanaryConfigs(application, configurationAccountName)
     } catch (RetrofitError e) {
+      log.info("Retrofit error while fetching CanaryConfigs: {}", e.getMessage())
+      e.printStackTrace()
       throw classifyError(e)
     }
   }
