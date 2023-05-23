@@ -258,7 +258,9 @@ class PipelineController {
     trigger = trigger ?: [:]
     AuthenticatedRequest.setApplication(application)
     try {
+      log.info("**** received request /pipelines/v2/{}/{}",application, pipelineNameOrId)
       def body = pipelineService.triggerViaEcho(application, pipelineNameOrId, trigger)
+      log.info("**** received triggered via echo application:{} , pipelineNameOrId : {}", application, pipelineNameOrId);
       return new ResponseEntity(body, HttpStatus.ACCEPTED)
     } catch (e) {
       log.error("Unable to trigger pipeline (application: {}, pipelineId: {})",

@@ -96,7 +96,8 @@ class PipelineService {
     def executionId = ulid.nextValue().toString()
     parameters.put("eventId", eventId)
     parameters.put("executionId", executionId)
-
+    log.info("****# triggerViaEcho() - application: {}, pipelineNameOrId: {}, eventId: {}, executionId: {}",
+      application, pipelineNameOrId, eventId, executionId)
     Map eventMap = [
       content: [
         application     : application,
@@ -109,6 +110,8 @@ class PipelineService {
       ]
     ]
     echoService.postEvent(eventMap)
+    log.info("****# Posted successfully to Echo??. application: {}, pipelineNameOrId: {}, eventId: {}, executionId: {}",
+      application, pipelineNameOrId, eventId, executionId)
     return [
       eventId: eventId,
       ref    : String.format("/pipelines/%s", executionId)
